@@ -21,5 +21,14 @@ private:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	// Move the barrel so that a shot hits where crosshair intersects with the world
 	void AimTowardsCrosshair();
+
+	bool GetSightRayHitLocation(FVector &Location) const;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairXLocation = 0.5f;
+	
+	UPROPERTY(EditAnywhere)
+	float CrossHairYLocation = 0.33333f;
 };
