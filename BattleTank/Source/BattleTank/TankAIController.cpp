@@ -9,11 +9,20 @@ void ATankAIController::BeginPlay() {
 	auto PlayerTank = GetPlayerTank();
 
 	if (PlayerTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Ai controller found %s as a player"), *PlayerTank->GetName());
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("AI controller could not find a player"))
 	}
+}
+
+// Called every frame
+void ATankAIController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	
+	if (GetPlayerTank()) {
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+	}	
 }
 
 ATank * ATankAIController::GetPlayerTank() const {
