@@ -11,7 +11,10 @@ class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
 public:
-	void AimAt(FVector HitLocation);	
+	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
@@ -28,4 +31,7 @@ private:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 100000.f;//TODO find Sensible value
 };
