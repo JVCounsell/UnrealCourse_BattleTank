@@ -35,7 +35,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 
 		if (UGameplayStatics::SuggestProjectileVelocity(this, LaunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
 			auto AimDirection = LaunchVelocity.GetSafeNormal();
-			UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
 			MoveBarrelTowards(AimDirection);
 			MoveTurretTowards(AimDirection);
 		}
