@@ -10,8 +10,9 @@ class ATank;
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
-	GENERATED_BODY()
 	
+	GENERATED_BODY()
+
 private:
 	ATank* ControlledTank = nullptr;
 
@@ -20,4 +21,7 @@ private:
 	ATank* PlayerTank = nullptr;
 
 	virtual void Tick(float DeltaSeconds) override;
+
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 3000.0f;
 };
