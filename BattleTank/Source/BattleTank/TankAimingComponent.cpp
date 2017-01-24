@@ -17,18 +17,14 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
-	if (!BarrelToSet){ return; }
+void UTankAimingComponent::Initialize(UTankBarrel * BarrelToSet, UTurretComponent * TurretToSet) {
 	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTurretComponent * TurretToSet) {
-	if (!TurretToSet){ return; }
 	Turret = TurretToSet;
 }
 
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
-	if(Barrel){
+	if(ensure(Barrel)){
 		auto TankName = GetOwner()->GetName();
 		auto StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 		FVector LaunchVelocity;
@@ -43,7 +39,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector Direction) {
-	
+	if (!ensure(Barrel && Turret)){ return; }
 	///move the barrel in the z direction so that the rotation matches the one passed in by the vector
 
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
@@ -54,7 +50,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector Direction) {
 }
 
 void UTankAimingComponent::MoveTurretTowards(FVector Direction) {
-
+	if (!ensure(Turret)) { return; }
 	///move the barrel in the z direction so that the rotation matches the one passed in by the vector
 
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
