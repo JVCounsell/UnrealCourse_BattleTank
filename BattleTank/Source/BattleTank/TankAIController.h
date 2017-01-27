@@ -19,7 +19,7 @@ private:
 
 	APawn* ControlledTank = nullptr;
 
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 
 	APawn* PlayerTank = nullptr;
 
