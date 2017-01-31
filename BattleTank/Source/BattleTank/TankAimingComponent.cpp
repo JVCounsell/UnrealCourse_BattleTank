@@ -35,6 +35,10 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	}	
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const {
+	return FiringState;
+}
+
 void UTankAimingComponent::Initialize(UTankBarrel * BarrelToSet, UTurretComponent * TurretToSet) {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
@@ -62,7 +66,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector Direction) {
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = Direction.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-
+		
 	Barrel->Elevate(DeltaRotator.Pitch);
 }
 
@@ -73,8 +77,14 @@ void UTankAimingComponent::MoveTurretTowards(FVector Direction) {
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = Direction.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotator;
-
-	Turret->MoveTurret(DeltaRotator.Yaw);
+	
+	// always the shortest route
+	if (FMath::Abs(DeltaRotator.Yaw)< 180) {
+		Turret->MoveTurret(DeltaRotator.Yaw);
+	}
+	else {
+		Turret->MoveTurret(-DeltaRotator.Yaw);
+	}
 }
 
 bool UTankAimingComponent::IsBarrelMoving() {
@@ -93,3 +103,4 @@ void UTankAimingComponent::Fire() {
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
