@@ -10,7 +10,8 @@ UENUM()
 enum class EFiringState : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutofAmmo
 };
 
 
@@ -38,9 +39,12 @@ public:
 
 	EFiringState GetFiringState() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetAmmoLeft() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Reloading;
+	EFiringState FiringState = EFiringState::Reloading;	
 
 private:
 	UTankBarrel* Barrel = nullptr;
@@ -62,6 +66,10 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.f;
+
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int ammoLeft = 3;
 
 	double LastFireTime = 0;
 
