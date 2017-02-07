@@ -40,7 +40,7 @@ public:
 	EFiringState GetFiringState() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetAmmoLeft() const;
+	int32 GetAmmoLeft() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -69,7 +69,7 @@ private:
 
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int ammoLeft = 3;
+	int32 ammoLeft = 3;
 
 	double LastFireTime = 0;
 
